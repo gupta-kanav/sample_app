@@ -5,15 +5,14 @@ describe "Static pages" do
 
   describe "Home page" do
 
+    before { visit root_path }
     it "should have the content 'Sample App'" do
-      visit root_path
       expect(page).to have_content('Sample App')
     end
     
     
     
     it "should have the title 'Home'" do
-          visit root_path
           expect(page).to have_title("Ruby on Rails Tutorial Sample App | Home")
         end
   end
