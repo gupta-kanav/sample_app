@@ -39,6 +39,19 @@ RSpec.configure do |config|
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
 
+  def sign_in(user, options={})
+    if options[:no_capybara]
+      # Sign in when not using Capybara.
+      remember_token = User.new_remember_token
+      cookies[:remember_token] = remember_token
+      user.update_attribute(:remember_token, User.encrypt(remember_token))
+    else
+      visit signin_path
+      fill_in "Email",    with: user.email
+      fill_in "Password", with: user.password
+      click_button "Sign in"
+    end
+  end
   # Run specs in random order to surface order dependencies. If you find an
   # order dependency and want to debug it, you can fix the order by providing
   # the seed, which is printed after each run.

@@ -13,7 +13,7 @@ describe User do
   it { should respond_to(:email) }
   
   it { should respond_to(:password_digest) }
-  
+  it { should respond_to(:remember_token) }
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
   
@@ -24,6 +24,11 @@ describe User do
       before { @user.name = " " }
       it { should_not be_valid }
     end
+    
+    describe "remember token" do
+       before { @user.save }
+       its(:remember_token) { should_not be_blank }
+     end
     
     describe "when email is not present" do
         before { @user.email = " " }
@@ -60,6 +65,7 @@ describe User do
           end
 end
 
+
 # == Schema Information
 #
 # Table name: users
@@ -70,5 +76,6 @@ end
 #  created_at      :datetime
 #  updated_at      :datetime
 #  password_digest :string(255)
+#  remember_token  :string(255)
 #
 
